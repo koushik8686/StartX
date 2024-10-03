@@ -18,15 +18,18 @@ mongoose.connect(process.env.URL||"mongodb://127.0.0.1:27017/hakathin", { useNew
 
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: "https://start-x-nine.vercel.app",
     methods: ["GET", "POST"],
   },
 });
 
-
-
 // Middleware
-app.use(cors());
+const corsOptions = {
+    origin: 'https://start-x-nine.vercel.app', // Ensure this matches your frontend URL
+    methods: ['GET', 'POST'], // Ensure POST is included
+  };
+  
+  app.use(cors(corsOptions));
 app.use(express.json());
 
 // Routes
