@@ -27,7 +27,7 @@ export default function ImprovedChat({ initialMessages = [] }) {
 
     const fetchMessages = async () => {
       try {
-        const response = await axios.get(`/admin/messages/${startup}`)
+        const response = await axios.get(`http://localhost:4000//admin/messages/${startup}`)
         setMessages(response.data.messsages || [])
       } catch (error) {
         console.error('Error fetching messages:', error)

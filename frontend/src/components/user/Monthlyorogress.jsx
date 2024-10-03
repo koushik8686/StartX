@@ -19,7 +19,7 @@ const MonthlyProgressReport = ({ progress }) => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      const response = await axios.post(`/submit/reports/${startup}`, { month, milestones, issues, financials })
+      const response = await axios.post(`http://localhost:4000//submit/reports/${startup}`, { month, milestones, issues, financials })
       console.log(response)
       setMonthlyData([...monthlyData, { month, milestones, issues, financials }])
       setFormVisible(false)
