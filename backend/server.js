@@ -24,12 +24,7 @@ const io = new Server(server, {
 });
 
 // Middleware
-const corsOptions = {
-    origin: 'https://start-x-nine.vercel.app', // Ensure this matches your frontend URL
-    methods: ['GET', 'POST'], // Ensure POST is included
-  };
-  
-  app.use(cors(corsOptions));
+  app.use(cors());
 app.use(express.json());
 
 // Routes
