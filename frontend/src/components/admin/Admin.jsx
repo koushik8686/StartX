@@ -21,21 +21,21 @@ export default function Admin() {
   const [visibleDetails, setVisibleDetails] = useState(null)
 
   useEffect(() => {
-    fetch('admin/startups')
+    fetch('https://startx-server.onrender.com/admin/startups')
       .then((response) => response.json())
       .then((data) => setStartups(data))
       .catch((error) => console.error('Error fetching startups:', error))
   }, [])
   const navigate = useNavigate()
   useEffect(() => {
-    fetch('admin/eir-requests')
+    fetch('https://startx-server.onrender.com/admin/eir-requests')
       .then((response) => response.json())
       .then((data) => setEirRequests(data))
       .catch((error) => console.error('Error fetching EIR requests:', error))
   }, [])
 
   useEffect(() => {
-    fetch('admin/grant-requests')
+    fetch('https://startx-server.onrender.com/admin/grant-requests')
       .then((response) => response.json())
       .then((data) => setGrantRequests(data.reverse()))
       .catch((error) => console.error('Error fetching grant requests:', error))

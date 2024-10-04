@@ -43,9 +43,9 @@ export default function GrantApplicationComponent({ grantSchemes }) {
     }
   };
 
-  const handleReject = (id) => updateGrantStatus(id, 'Rejected', 'admin/grant/reject');
-  const handleAccept = (id) => updateGrantStatus(id, 'Approved', 'admin/grant/accept');
-  const handleInProgress = (id) => updateGrantStatus(id, 'In Progress', 'admin/grant/progress');
+  const handleReject = (id) => updateGrantStatus(id, 'Rejected', 'https://startx-server.onrender.com/admin/grant/reject');
+  const handleAccept = (id) => updateGrantStatus(id, 'Approved', 'https://startx-server.onrender.com/admin/grant/accept');
+  const handleInProgress = (id) => updateGrantStatus(id, 'In Progress', 'https://startx-server.onrender.com/admin/grant/progress');
 
   // Custom sorting function
   const sortSchemes = (schemes) => {

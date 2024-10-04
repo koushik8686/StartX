@@ -21,7 +21,7 @@ const EIRRequests = ({ eirRequests }) => {
   const handleRequestUpdate = async (actionType, requestId) => {
     setLoading(true);
     try {
-      const apiEndpoint = `admin/eir/${actionType}`;
+      const apiEndpoint = `https://startx-server.onrender.com/admin/eir/${actionType}`;
       const response = await fetch(apiEndpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
