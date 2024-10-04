@@ -61,7 +61,7 @@ export default function GrantDetails({ grant }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await axios.post(`http://localhost:4000//submit/funds/${startup}`, formData);
+    await axios.post(`https://startx-server.onrender.com/submit/funds/${startup}`, formData);
     closeModal();
   };
 

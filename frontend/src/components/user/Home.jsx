@@ -28,7 +28,7 @@ export default function StartupHomepage() {
 
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://localhost:4000//user/home/${user}/${startup}`);
+        const response = await axios.get(`https://startx-server.onrender.com/user/home/${user}/${startup}`);
         const { user: userResponse, startup: startupResponse, eirRecords, grantRecords } = response.data;
 
         console.log(response); // Log the entire response for better debugging

@@ -6,7 +6,7 @@ import axios from 'axios'
 import { motion, AnimatePresence } from 'framer-motion'
 import io from 'socket.io-client'
 
-const socket = io("http://localhost:4000")
+const socket = io("https://startx-server.onrender.com")
 
 export default function StartupMessages() {
   const [startups, setStartups] = useState([])
@@ -19,7 +19,7 @@ export default function StartupMessages() {
   useEffect(() => {
     const fetchStartups = async () => {
       try {
-        const response = await axios.get('http://localhost:4000//admin/startups')
+        const response = await axios.get('https://startx-server.onrender.com/admin/startups')
         setStartups(response.data)
       } catch (error) {
         console.error('Error fetching startups:', error)
@@ -56,7 +56,7 @@ export default function StartupMessages() {
     socket.emit('joinRoom', startupId)
     
     try {
-      const response = await axios.get(`http://localhost:4000//admin/messages/${startupId}`)
+      const response = await axios.get(`https://startx-server.onrender.com/admin/messages/${startupId}`)
       setMessages(response.data.messsages || [])
       setUnreadMessages((prev) => ({ ...prev, [startupId]: 0 }))
     } catch (error) {

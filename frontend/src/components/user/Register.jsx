@@ -27,7 +27,7 @@ export default function Component() {
     e.preventDefault()
     setIsLoading(true)
     try {
-      const { data } = await axios.post(`http://localhost:4000//auth/register`, { username, password, email })
+      const { data } = await axios.post(`https://startx-server.onrender.com/auth/register`, { username, password, email })
       alert(data.message)
       if (data.message === "Registration successful!") {
         Cookies.set('user', data.userId)
@@ -44,7 +44,7 @@ export default function Component() {
     e.preventDefault()
     setIsLoading(true)
     try {
-      const { data } = await axios.post(`http://localhost:4000//auth/kyc`, kycDetails)
+      const { data } = await axios.post(`https://startx-server.onrender.com/auth/kyc`, kycDetails)
       alert('KYC submitted successfully!')
       Cookies.set('startup', data.startup)
       navigate('/home')
