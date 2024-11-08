@@ -3,8 +3,6 @@ import { motion } from 'framer-motion'
 import axios from 'axios'
 import Cookies from 'js-cookie'
 import { Link, useNavigate } from 'react-router-dom'
-import { useGoogleLogin } from '@react-oauth/google'
-import { FcGoogle } from 'react-icons/fc'
 import Loader from '../Loader'
 
 export default function Component() {
@@ -115,35 +113,7 @@ export default function Component() {
       cancelAnimationFrame(animationFrameId)
     }
   }, [])
-  const responsegoogle = async (authtesult) => {
-    try {
-      console.log(authtesult);
-      if (authtesult) {
-        const response = await axios.get(`https://start-x-server.vercel.app/auth/google`, { params: { tokens: authtesult } });
-        if (response.data.message) {
-          if (response.data.message === 'Email Already Exists') {
-            Cookies.set('user', response.data.userId);
-            setKycDetails({ ...kycDetails, user: response.data.userId })
-            console.log(kycDetails);
-            Cookies.set('startup', response.data.startup);
-             navigate('/home')
-          }
-          Cookies.set('user', response.data.userId);
-          setKycDetails({ ...kycDetails, user: response.data.userId })
-          console.log('Registration successful:', response.data);
-          setShowKYCForm(!showKYCForm)
-        }
-      }
-    } catch (error) {
-      console.log("error is ", error);
-    }
-  }
 
-  const googlelogin = useGoogleLogin({
-    onSuccess: responsegoogle,
-    onError: responsegoogle,
-  });
-  
   
   return (
       <div className="min-h-screen flex items-center justify-center bg-[#F5F5F5] p-4 relative">
@@ -261,15 +231,6 @@ export default function Component() {
                 <span className="absolute inset-x-0 h-px bg-[#48CFCB]"></span>
                 <span className="relative px-4 text-sm text-[#424242] bg-white">or</span>
               </div>
-            
-             
-                  <button
-                    onClick={googlelogin}
-                    className="mt-4 flex items-center justify-center w-full py-3 px-4 border border-[#48CFCB] rounded-lg shadow-sm text-sm font-medium text-[#424242] bg-white hover:bg-[#F5F5F5] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#48CFCB] transition-colors duration-200"
-                  >
-                    <FcGoogle className="mr-2" /> Sign in with Google
-                  </button>
-
               <Link to={'/login'}>Login</Link>
             </div>
           </div>

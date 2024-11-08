@@ -17,7 +17,7 @@ mongoose.connect(process.env.URL||"mongodb://127.0.0.1:27017/hakathin", { useNew
 
 const io = new Server(server, {
     cors: {
-      origin: "https://start-x-nine.vercel.app",
+      origin: "https://start-x-one.vercel.app/",
       methods: ["GET", "POST" ,"PUT", "DELETE"],
     },
   });
