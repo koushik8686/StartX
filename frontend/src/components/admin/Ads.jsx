@@ -18,13 +18,13 @@ const AdPage = () => {
 
   async function fetchData() {
     setLoading(true)
-    await axios.get('https://start-x-server.vercel.app/0/ads/requests').then(async (response) => {
+    await axios.get('https://start-x-server.vercel.app/ads/requests').then(async (response) => {
       setPendingAds(response.data);
-      await axios.get('https://start-x-server.vercel.app/0/ads/newrequests').then((response) => {
+      await axios.get('https://start-x-server.vercel.app/ads/newrequests').then((response) => {
         setPendingAds(response.data);
       });
     });
-    await axios.get('https://start-x-server.vercel.app/0/ads/getads').then((response) => {
+    await axios.get('https://start-x-server.vercel.app/ads/getads').then((response) => {
       setExistingAds(response.data);
       setLoading(false)
     });
@@ -45,7 +45,7 @@ const AdPage = () => {
     try {
       setShowPopup(false);
       setLoading(true)
-      await axios.post(`https://start-x-server.vercel.app/0/ads/add/${selectedAdId}`, { weight }).then(async (response) => {
+      await axios.post(`https://start-x-server.vercel.app/ads/add/${selectedAdId}`, { weight }).then(async (response) => {
         alert(response.data.message);
         setLoading(false)
         if (response.statusCode === 200) {
@@ -61,7 +61,7 @@ const AdPage = () => {
   const handleDeleteReq = async (adId) => {
     setdeletereqpopup(false)
     setLoading(true)
-    await axios.delete(`https://start-x-server.vercel.app/0/ads/delete/request/${adId}`).then(async(response) =>{
+    await axios.delete(`https://start-x-server.vercel.app/ads/delete/request/${adId}`).then(async(response) =>{
       setLoading(false)
     await fetchData()
   })
@@ -69,7 +69,7 @@ const AdPage = () => {
   const handleDeleteAd = async (adId) => {
     setdeleteadpopup(false)
     setLoading(true)
-    await axios.delete(`https://start-x-server.vercel.app/0/ads/delete/${adId}`).then(async(response) =>{
+    await axios.delete(`https://start-x-server.vercel.app/ads/delete/${adId}`).then(async(response) =>{
       setLoading(false)
     await fetchData()
   })
@@ -132,12 +132,12 @@ const AdPage = () => {
                     <td className="p-3 border-b">{ad.adverCompanyName}</td>
                     <td className="p-3 border-b">
                       <a
-                        href={`https://start-x-server.vercel.app/0/uploads/ads/${ad.AdImgUrl}`}
+                        href={`https://start-x-server.vercel.app/uploads/ads/${ad.AdImgUrl}`}
                         target="_blank"
                         rel="noopener noreferrer"
                       >
                         <img
-                          src={`https://start-x-server.vercel.app/0/uploads/ads/${ad.AdImgUrl}`}
+                          src={`https://start-x-server.vercel.app/uploads/ads/${ad.AdImgUrl}`}
                           alt={`${ad.adverCompanyName} ad`}
                           className="w-24 h-auto max-h-16 object-cover rounded"
                         />

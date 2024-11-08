@@ -37,7 +37,7 @@ export default function ReviewerRegister() {
     setIsLoading(true);
 
     try {
-      const response = await axios.post('https://start-x-server.vercel.app/0/review/register', formData, {
+      const response = await axios.post('https://start-x-server.vercel.app/review/register', formData, {
         headers: { 'Content-Type': 'application/json' }
       });
 

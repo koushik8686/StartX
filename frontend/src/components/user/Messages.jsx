@@ -7,7 +7,7 @@ import { io } from 'socket.io-client'
 import { Send, Loader2 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 
-const socket = io("https://start-x-server.vercel.app/0")
+const socket = io("https://start-x-server.vercel.app/")
 
 export default function ImprovedChat({ initialMessages = [] }) {
   const [messages, setMessages] = useState(initialMessages)

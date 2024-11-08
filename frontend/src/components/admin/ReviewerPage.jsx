@@ -27,7 +27,7 @@ export default function EIRReviewerSelection({ params }) {
   }, [toast.show]);
   const fetchEirData = async () => {
     try {
-      const response = await fetch(`https://start-x-server.vercel.app/0/admin/eir/${id}`);
+      const response = await fetch(`https://start-x-server.vercel.app/admin/eir/${id}`);
       if (!response.ok) throw new Error('Failed to fetch EIR data');
       const data = await response.json();
       setEirData(data);
@@ -40,7 +40,7 @@ export default function EIRReviewerSelection({ params }) {
 
   const fetchReviewers = async () => {
     try {
-      const response = await fetch('https://start-x-server.vercel.app/0/review/reviewers');
+      const response = await fetch('https://start-x-server.vercel.app/review/reviewers');
       if (!response.ok) throw new Error('Failed to fetch reviewers');
       const data = await response.json();
       setReviewers(data);

@@ -31,7 +31,7 @@ export default function Component() {
     setIsLoading(true)
     try {
       console.log(username);
-      const { data } = await axios.post(`https://start-x-server.vercel.app/0/auth/register`, { username, password, email })
+      const { data } = await axios.post(`https://start-x-server.vercel.app/auth/register`, { username, password, email })
       alert(data.message)
       if (data.message === "Registration successful!") {
         Cookies.set('user', data.userId)
@@ -55,7 +55,7 @@ export default function Component() {
 
     // Append the user ID stored in cookies  
     try {
-      const response = await fetch('https://start-x-server.vercel.app/0/auth/kyc', {
+      const response = await fetch('https://start-x-server.vercel.app/auth/kyc', {
         method: 'POST',
         body: formData,
       });
@@ -119,7 +119,7 @@ export default function Component() {
     try {
       console.log(authtesult);
       if (authtesult) {
-        const response = await axios.get(`https://start-x-server.vercel.app/0/auth/google`, { params: { tokens: authtesult } });
+        const response = await axios.get(`https://start-x-server.vercel.app/auth/google`, { params: { tokens: authtesult } });
         if (response.data.message) {
           if (response.data.message === 'Email Already Exists') {
             Cookies.set('user', response.data.userId);

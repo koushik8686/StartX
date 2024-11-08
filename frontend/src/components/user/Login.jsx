@@ -35,7 +35,7 @@ const LoginPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.post('/auth/login', { email, password });
+      const { data } = await axios.post('https://start-x-server.vercel.app/auth/login', { email, password });
       if (data.message === 'Login successful') {
         Cookie.set('user', data.userId);
         Cookie.set('startup', data.startup);

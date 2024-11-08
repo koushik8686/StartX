@@ -30,7 +30,7 @@ export default function AdAnalyticsDashboard() {
   useEffect(() => {
     const fetchAdData = async () => {
       try {
-        const response = await axios.get(`https://start-x-server.vercel.app/0/ads/${id}`);
+        const response = await axios.get(`https://start-x-server.vercel.app/ads/${id}`);
         setAdData(response.data);
       } catch (error) {
         console.error("Error fetching ad data:", error);
