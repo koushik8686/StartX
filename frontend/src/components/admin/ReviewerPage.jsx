@@ -54,7 +54,7 @@ export default function EIRReviewerSelection({ params }) {
   const submitReviewerData = async (requestId) => {
     try {
       setLoading(true);
-      const response = await fetch(`/admin/eir/selectreviewer/${id}`, {
+      const response = await fetch(`https://vercel.com/koushiks-projects-37ba14e7/admin/eir/selectreviewer/${id}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(selectedReviewers),

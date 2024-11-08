@@ -62,9 +62,9 @@ export default function GrantApplicationComponent({ grantSchemes }) {
     }
   };
 
-  const handleReject = (id) => updateGrantStatus(id, 'Rejected', 'admin/grant/reject');
-  const handleAccept = (id) => updateGrantStatus(id, 'Approved', 'admin/grant/accept');
-  const handleInProgress = (id) => updateGrantStatus(id, 'In Progress', 'admin/grant/progress');
+  const handleReject = (id) => updateGrantStatus(id, 'Rejected', 'https://vercel.com/koushiks-projects-37ba14e7admin/grant/reject');
+  const handleAccept = (id) => updateGrantStatus(id, 'Approved', 'https://vercel.com/koushiks-projects-37ba14e7admin/grant/accept');
+  const handleInProgress = (id) => updateGrantStatus(id, 'In Progress', 'https://vercel.com/koushiks-projects-37ba14e7admin/grant/progress');
 
   // Custom sorting function
   const sortSchemes = (schemes) => {
