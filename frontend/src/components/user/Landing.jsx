@@ -19,7 +19,7 @@ export default function AnimatedLandingPage() {
           <Link to="/login" className="text-white hover:text-gray-300">
             Login
           </Link>
-          <Link to="/register" className="text-white hover:text-gray-300">
+          <Link to="/signup" className="text-white hover:text-gray-300">
             Register
           </Link>
         </nav>
