@@ -41,7 +41,7 @@ const EIRRequests = ({ eirRequests }) => {
   const handleRequestUpdate = async (actionType, requestId) => {
     setLoading(true);
     try {
-      const apiEndpoint = `https://vercel.com/koushiks-projects-37ba14e7/admin/eir/update-status`;
+      const apiEndpoint = `https://start-x-server.vercel.app/admin/eir/update-status`;
       const response = await fetch(apiEndpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
