@@ -8,8 +8,11 @@ import AdminNavbar from './AdminNavbar'
 import EIRRequests from './EirRequests'
 import GrantApplicationComponent from './GrantRequests'
 import StartupMessages from './Messages'
+import AdsComponent from './Ads'
 import { ChevronDown, ChevronUp } from 'lucide-react'
 import { Link } from 'react-router-dom'
+import Reviewrs from './Reviewrs'
+import Reviewers from './Reviewrs'
 
 
 export default function Admin() {
@@ -21,21 +24,21 @@ export default function Admin() {
   const [visibleDetails, setVisibleDetails] = useState(null)
 
   useEffect(() => {
-    fetch('https://startx-server.onrender.com/admin/startups')
+    fetch('admin/startups')
       .then((response) => response.json())
       .then((data) => setStartups(data))
       .catch((error) => console.error('Error fetching startups:', error))
   }, [])
   const navigate = useNavigate()
   useEffect(() => {
-    fetch('https://startx-server.onrender.com/admin/eir-requests')
+    fetch('admin/eir-requests')
       .then((response) => response.json())
       .then((data) => setEirRequests(data))
       .catch((error) => console.error('Error fetching EIR requests:', error))
   }, [])
 
   useEffect(() => {
-    fetch('https://startx-server.onrender.com/admin/grant-requests')
+    fetch('admin/grant-requests')
       .then((response) => response.json())
       .then((data) => setGrantRequests(data.reverse()))
       .catch((error) => console.error('Error fetching grant requests:', error))
@@ -120,27 +123,11 @@ export default function Admin() {
                                 </h3>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                   <DetailItem label="Industry" value={startup.kyc?.company_details?.industry} />
-                                  <DetailItem
-                                    label="Incorporation Date"
-                                    value={
-                                      startup.kyc?.company_details?.incorporation_date
-                                        ? new Date(startup.kyc.company_details.incorporation_date).toLocaleDateString()
-                                        : 'N/A'
-                                    }
-                                  />
                                   <DetailItem label="Website" value={startup.kyc?.company_details?.website} />
                                   <DetailItem label="Contact Person" value={startup.kyc?.contact_person?.name} />
                                   <DetailItem label="Contact Email" value={startup.kyc?.contact_person?.email} />
-                                  <DetailItem label="Contact Phone" value={startup.kyc?.contact_person?.phone} />
-                                  <DetailItem
-                                    label=" Created At"
-                                    value={
-                                      startup.grants?.[0]?.created_at
-                                        ? new Date(startup.grants[0].created_at).toLocaleDateString()
-                                        : 'N/A'
-                                    }
-                                  />
-                                  <Link  className="font-semibold text-purple-700"  to={`/progress/${startup._id}`}>Progress</Link>
+                                  <DetailItem label="Contact Phone" value={startup.kyc?.contact_person?.phone} /> 
+                                  <Link  className="  font-semibold text-purple-700"  to={`/progress/${startup._id}`}>Progress</Link>
                                 </div>
                               </div>
                             </td>
@@ -157,9 +144,13 @@ export default function Admin() {
 
         {selectedTab === 'eirrequests' && <EIRRequests eirRequests={eirRequests} />}
 
-        {selectedTab === 'budgetrequests' && <GrantApplicationComponent grantSchemes={grantRequests} />}
+        {selectedTab === 'grantsrequests' && <GrantApplicationComponent grantSchemes={grantRequests} />}
+       
+        {selectedTab === 'reviewers' && <Reviewers />}
 
         {selectedTab === 'messages' && <StartupMessages />}
+
+        {selectedTab === 'ads' && <AdsComponent />}
       </div>
     </div>
   )
@@ -173,3 +164,4 @@ function DetailItem({ label, value }) {
     </div>
   )
 }
+

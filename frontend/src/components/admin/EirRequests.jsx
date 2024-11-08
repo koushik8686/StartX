@@ -1,31 +1,51 @@
 import React, { useEffect, useState } from 'react';
+import Loader from '../Loader';
+import Toast from '../Toast';
+import { AnimatePresence } from 'framer-motion';
+import { ChevronDown, ChevronUp, Star } from 'lucide-react';
+import ReviewsPopup from './ReviewsPopup'
 
 const EIRRequests = ({ eirRequests }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [toast, setToast] = useState(null);
   const [updatedRequests, setUpdatedRequests] = useState(eirRequests);
   const [openRequest, setOpenRequest] = useState(null);
   const [disabledButtons, setDisabledButtons] = useState({});
+  const [openSections, setOpenSections] = useState({});
 
-  // Sync requests on prop update
+  const toggleSection = (requestId) => {
+    setOpenSections((prev) => ({
+      ...prev,
+      [requestId]: !prev[requestId],
+    }));
+  };
+
   useEffect(() => {
     setUpdatedRequests(eirRequests.reverse());
   }, [eirRequests]);
 
-  // Toggle details for a specific request
+  useEffect(() => {
+    if (toast) {
+      const timer = setTimeout(() => {
+        setToast(null);
+      }, 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [toast]);
+
   const toggleRequestDetails = (id) => {
     setOpenRequest(openRequest === id ? null : id);
   };
 
-  // Unified request handler for actions (accept, reject, in-progress)
   const handleRequestUpdate = async (actionType, requestId) => {
     setLoading(true);
     try {
-      const apiEndpoint = `https://startx-server.onrender.com/admin/eir/${actionType}`;
+      const apiEndpoint = `/admin/eir/update-status`;
       const response = await fetch(apiEndpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ requestId }),
+        body: JSON.stringify({ actionType, requestId }),
       });
 
       if (!response.ok) throw new Error(`Failed to ${actionType} request`);
@@ -38,26 +58,40 @@ const EIRRequests = ({ eirRequests }) => {
         )
       );
 
-      const disableConfig =
-        actionType === 'in-progress'
-          ? { inProgress: true }
-          : { accept: true, reject: true, inProgress: true };
-
-      setDisabledButtons((prev) => ({ ...prev, [requestId]: disableConfig }));
+      setDisabledButtons((prev) => ({
+        ...prev,
+        [requestId]: { ...prev[requestId], [actionType]: true },
+      }));
+      setToast({ type: 'success', message: `${actionType.charAt(0).toUpperCase() + actionType.slice(1)}d successfully!` });
       setError(null);
     } catch (err) {
-      setError(err.message);
+      setToast({
+        type: 'error',
+        message: err.message || 'An unknown error occurred. Please try again.',
+      });
     } finally {
       setLoading(false);
     }
   };
+  const getStatusColor = (status) => {
+    switch (status) {
+      case 'Approved': return 'bg-green-200 text-green-800';
+      case 'Rejected': return 'bg-red-200 text-red-800';
+      case 'In Progress': return 'bg-yellow-200 text-yellow-800';
+      case 'Short Listed': return 'bg-blue-200 text-blue-800';
+      case 'Under Review': return 'bg-purple-200 text-purple-800';
+      default: return 'bg-gray-200 text-gray-800';
+    }
+  };
 
-  // Render request items
   return (
     <div className="container mx-auto p-6 space-y-6">
+      {loading && <Loader />}
       <h1 className="text-3xl font-bold mb-6">EIR Requests</h1>
-      {error && <p className="text-red-500">{error}</p>}
-      {loading && <p>Loading...</p>}
+
+      <AnimatePresence>
+        {toast && <Toast message={toast.message} type={toast.type} />}
+      </AnimatePresence>
 
       {updatedRequests.map((request) => {
         const isDisabled = disabledButtons[request._id] || {};
@@ -79,74 +113,75 @@ const EIRRequests = ({ eirRequests }) => {
 
             {openRequest === request._id && (
               <div className="mt-4 bg-gray-100 p-4 rounded-lg">
-                <p>
-                  <strong>Entrepreneur:</strong> {request.entrepreneur?.name || 'N/A'}
-                </p>
-                <p>
-                  <strong>Business Idea:</strong> {request.business_idea || 'N/A'}
-                </p>
-                <p>
-                  <strong>Summary:</strong> {request.summary || 'N/A'}
-                </p>
-                <p>
-                  <strong>Mentorship Startups:</strong>{' '}
-                  {request.objectives?.mentorship_startups?.join(', ') || 'N/A'}
-                </p>
-                <p>
-                  <strong>Personal Goals:</strong> {request.objectives?.personal_goals || 'N/A'}
-                </p>
+                <p><strong>Entrepreneur:</strong> {request.entrepreneur?.name || 'N/A'}</p>
+                <p><strong>Business Idea:</strong> {request.business_idea || 'N/A'}</p>
+                <p><strong>Summary:</strong> {request.summary || 'N/A'}</p>
+                <p><strong>Mentorship Startups:</strong> {request.objectives?.mentorship_startups?.join(', ') || 'N/A'}</p>
+                <p><strong>Personal Goals:</strong> {request.objectives?.personal_goals || 'N/A'}</p>
               </div>
             )}
 
             <div className="mt-4 flex items-center">
               <div className="flex-1">
                 <span
-                  className={`px-3 py-1 rounded font-semibold ${
-                    request.status?.status === 'Accepted'
-                      ? 'bg-green-200 text-green-800'
-                      : request.status?.status === 'Rejected'
-                      ? 'bg-red-200 text-red-800'
-                      : 'bg-yellow-200 text-yellow-800'
-                  }`}
+                  className={`px-3 py-1 rounded font-semibold ${getStatusColor(request.status?.status)}`}
                 >
                   {request.status?.status || 'N/A'}
                 </span>
+                <button
+                  className="text-lg font-semibold cursor-pointer flex items-center mt-4"
+                  onClick={() => toggleSection(request._id)}
+                >
+                  Reviews
+                  <span className="ml-2">
+                    {openSections[request._id] ? <ChevronUp className="h-5 w-5" /> : <ChevronDown className="h-5 w-5" />}
+                  </span>
+                </button>
+                {openSections[request._id] && (
+                 <ReviewsPopup request ={request} toggle={toggleSection} reviews={request.reviews}/>
+                )}
               </div>
 
               <div className="flex space-x-2">
                 <button
                   className={`bg-blue-600 hover:bg-blue-700 text-white px-4 py-1 rounded shadow-md transition-colors ${
-                    isDisabled.accept || isDisabled.reject || isDisabled.inProgress
-                      ? 'opacity-50 cursor-not-allowed'
-                      : ''
+                    isDisabled.approve ? 'opacity-50 cursor-not-allowed' : ''
                   }`}
-                  onClick={() => handleRequestUpdate('accept', request._id)}
-                  disabled={isDisabled.accept || isDisabled.reject || isDisabled.inProgress}
+                  onClick={() => handleRequestUpdate('approve', request._id)}
+                  disabled={isDisabled.approve}
                 >
                   Accept
                 </button>
 
                 <button
                   className={`bg-red-600 hover:bg-red-700 text-white px-4 py-1 rounded shadow-md transition-colors ${
-                    isDisabled.accept || isDisabled.reject || isDisabled.inProgress
-                      ? 'opacity-50 cursor-not-allowed'
-                      : ''
+                    isDisabled.reject ? 'opacity-50 cursor-not-allowed' : ''
                   }`}
                   onClick={() => handleRequestUpdate('reject', request._id)}
-                  disabled={isDisabled.accept || isDisabled.reject || isDisabled.inProgress}
+                  disabled={isDisabled.reject}
                 >
                   Reject
                 </button>
 
                 <button
-                  className={`bg-yellow-600 hover:bg-yellow-700 text-white px-4 py-1 rounded shadow-md transition-colors ${
-                    isDisabled.inProgress ? 'opacity-50 cursor-not-allowed' : ''
+                  className={`bg-purple-600 hover:bg-purple-700 text-white px-4 py-1 rounded shadow-md transition-colors ${
+                    isDisabled.shortlist ? 'opacity-50 cursor-not-allowed' : ''
                   }`}
-                  onClick={() => handleRequestUpdate('in-progress', request._id)}
-                  disabled={isDisabled.inProgress}
+                  onClick={() => handleRequestUpdate('shortlist', request._id)}
+                  disabled={isDisabled.shortlist}
                 >
-                  Mark as In Progress
+                  Mark Shortlisted
                 </button>
+                <a href={`/selectreviewers/${request._id}`}>
+                  <button
+                    className={`bg-gray-600 hover:bg-gray-700 text-white px-4 py-1 rounded shadow-md transition-colors ${
+                      isDisabled.underReview ? 'opacity-50 cursor-not-allowed' : ''
+                    }`}
+                    disabled={isDisabled.underReview}
+                  >
+                    Select Reviewers
+                  </button>
+                </a>
               </div>
             </div>
           </div>

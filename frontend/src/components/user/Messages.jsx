@@ -7,7 +7,7 @@ import { io } from 'socket.io-client'
 import { Send, Loader2 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 
-const socket = io("https://startx-server.onrender.com")
+const socket = io("http://localhost:4000")
 
 export default function ImprovedChat({ initialMessages = [] }) {
   const [messages, setMessages] = useState(initialMessages)
@@ -27,7 +27,7 @@ export default function ImprovedChat({ initialMessages = [] }) {
 
     const fetchMessages = async () => {
       try {
-        const response = await axios.get(`https://startx-server.onrender.com/admin/messages/${startup}`)
+        const response = await axios.get(`/admin/messages/${startup}`)
         setMessages(response.data.messsages || [])
       } catch (error) {
         console.error('Error fetching messages:', error)
@@ -115,7 +115,6 @@ export default function ImprovedChat({ initialMessages = [] }) {
                 >
                   <p className="text-sm font-semibold">{msg.sender === 'User' ? 'You' : msg.sender}</p>
                   <p className="mt-1 text-sm lg:text-base">{msg.message}</p>
-                  <p className="text-xs opacity-70 mt-2">{new Date(msg.created_at).toLocaleString()}</p>
                 </motion.div>
               </motion.div>
             ))}

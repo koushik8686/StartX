@@ -10,6 +10,8 @@ export default function GrantDetails({ grant }) {
     organization: '',
     email: '',
     phone: '',
+    pan:'',
+    aadhar: '',
     address: '',
     project_title: '',
     description: '',
@@ -61,7 +63,7 @@ export default function GrantDetails({ grant }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await axios.post(`https://startx-server.onrender.com/submit/funds/${startup}`, formData);
+    await axios.post(`/submit/funds/${startup}`, formData);
     closeModal();
   };
 
@@ -99,10 +101,14 @@ export default function GrantDetails({ grant }) {
                 <div className="flex justify-between items-center mb-4">
                   <span className="text-teal-600 font-semibold"><strong>Amount:</strong> {g.project_proposal.budget.total_funding_required}</span>
                   <span className={`px-3 py-1 rounded-full text-sm font-semibold ${
-                    g.grant_status.status === "Approved" ? "bg-green-200 text-green-800" : "bg-yellow-200 text-yellow-800"
-                  }`}>
-                    <strong>Status:</strong> {g.grant_status.status}
-                  </span>
+                      g.grant_status.status === "Approved" 
+                        ? "bg-green-200 text-green-800" 
+                        : g.grant_status.status === "Rejected" 
+                        ? "bg-red-200 text-red-800" 
+                        : "bg-yellow-200 text-yellow-800"
+                    }`}>
+                      <strong>Status:</strong> {g.grant_status.status}
+                    </span>
                 </div>
                 {g.project_proposal.objectives && g.project_proposal.objectives.length > 0 && (
                   <div>
@@ -176,6 +182,26 @@ export default function GrantDetails({ grant }) {
                   className="border border-gray-300 p-2 w-full rounded"
                 />
               </div>
+              <div className="mb-4">
+                <label className="block text-gray-700">Aadhar Number</label>
+                <input
+                  type="text"
+                  name="aadhar"
+                  value={formData.aadhar}
+                  onChange={handleChange}
+                  className="border border-gray-300 p-2 w-full rounded"
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-gray-700">Pan Number</label>
+                <input
+                  type="text"
+                  name="pan"
+                  value={formData.pan}
+                  onChange={handleChange}
+                  className="border border-gray-300 p-2 w-full rounded"
+                />
+              </div>
 
               <div className="mb-4">
                 <label className="block text-gray-700">Project Title</label>
@@ -188,7 +214,6 @@ export default function GrantDetails({ grant }) {
                   required
                 />
               </div>
-
               <div className="mb-4">
                 <label className="block text-gray-700">Project Description</label>
                 <textarea

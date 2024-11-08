@@ -28,7 +28,7 @@ export default function StartupHomepage() {
 
     const fetchData = async () => {
       try {
-        const response = await axios.get(`https://startx-server.onrender.com/user/home/${user}/${startup}`);
+        const response = await axios.get(`/user/home/${user}/${startup}`);
         const { user: userResponse, startup: startupResponse, eirRecords, grantRecords } = response.data;
 
         console.log(response); // Log the entire response for better debugging
@@ -72,7 +72,6 @@ export default function StartupHomepage() {
           <MonthlyProgress progress={startupData.progress} /> // Ensure progress is an array
         )}
       </main>
-
       <footer className="bg-gray-200 text-gray-800 py-4 text-center">
         StartX. .
       </footer>
