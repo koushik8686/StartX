@@ -6,8 +6,7 @@ const GrantSchemeSchema = new Schema({
   applicant: {
     name: { type: String, required: true },                      // Name of the applicant or organization
     organization: { type: String },
-    pan:String, 
-    aadhar_num:String,                             // Name of the organization (if applicable)
+    org_pan:String,                              // Name of the organization (if applicable)
     contact_details: {                                           
       email: { type: String, required: true },                   // Applicant's email
       phone: { type: String },                                   // Applicant's phone number
@@ -33,9 +32,7 @@ const GrantSchemeSchema = new Schema({
   reviews:[{
     reviewer_id: { type: String},
     reviewer_name: { type: String },
-    reviewer_email: { type: String },
-    status:String,
-    reviewer_organization: { type: String},
+    reviewer_name_type: { type: String},
     review_date: { type: Date },
     rating: { type: Number },
     comments: [{ type: String }]    
