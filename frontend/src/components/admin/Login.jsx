@@ -13,7 +13,7 @@ const AdminLogin = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('https://start-x-server.vercel.app/ads/admin/login', { username, password });
+            const response = await axios.post('https://start-x-server.vercel.app/admin/login', { username, password });
             console.log(response);
             if (response.data.message === "Login successful") {
                 Cookies.set('admin', "admin");

@@ -19,7 +19,7 @@ export default function StartupMessages() {
   useEffect(() => {
     const fetchStartups = async () => {
       try {
-        const response = await axios.get('https://start-x-server.vercel.app/ads/admin/startups')
+        const response = await axios.get('https://start-x-server.vercel.app/admin/startups')
         setStartups(response.data)
       } catch (error) {
         console.error('Error fetching startups:', error)
