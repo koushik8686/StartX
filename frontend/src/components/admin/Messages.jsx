@@ -6,7 +6,7 @@ import axios from 'axios'
 import { motion, AnimatePresence } from 'framer-motion'
 import io from 'socket.io-client'
 
-const socket = io("http://localhost:4000")
+const socket = io("https://start-x-server.vercel.app/0")
 
 export default function StartupMessages() {
   const [startups, setStartups] = useState([])

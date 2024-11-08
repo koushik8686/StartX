@@ -28,7 +28,7 @@ export default function GrantsReviewerSelection({ params }) {
 
   const fetchGrantdata = async () => {
     try {
-      const response = await fetch(`http://localhost:4000/admin/grant/${id}`);
+      const response = await fetch(`https://start-x-server.vercel.app/0/admin/grant/${id}`);
       if (!response.ok) throw new Error('Failed to fetch EIR data');
       const data = await response.json();
       SetGrantData(data);
@@ -40,7 +40,7 @@ export default function GrantsReviewerSelection({ params }) {
 
   const fetchReviewers = async () => {
     try {
-      const response = await fetch('http://localhost:4000/review/reviewers');
+      const response = await fetch('https://start-x-server.vercel.app/0/review/reviewers');
       if (!response.ok) throw new Error('Failed to fetch reviewers');
       const data = await response.json();
       setReviewers(data);

@@ -22,7 +22,7 @@ export default function Reviewers() {
   useEffect(() => {
     const fetchReviewers = async () => {
       try {
-        const response = await axios.get('http://localhost:4000/review/reviewers');
+        const response = await axios.get('https://start-x-server.vercel.app/0/review/reviewers');
         setReviewers(response.data);
       } catch (err) {
         console.error('Error fetching reviewers:', err);
@@ -45,7 +45,7 @@ export default function Reviewers() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:4000/review/add-reviewer', newReviewer);
+      const response = await axios.post('https://start-x-server.vercel.app/0/review/add-reviewer', newReviewer);
       setReviewers([...reviewers, response.data]);
       setNewReviewer({ name: '', email: '', password: '', organization: '', about: '' });
       setIsFormVisible(false);

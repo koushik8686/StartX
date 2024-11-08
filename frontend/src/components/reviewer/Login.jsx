@@ -40,7 +40,7 @@ export default function ReviewerLogin() {
     setIsLoading(true);
 
     try {
-      const response = await axios.post('http://localhost:4000/review/login', formData, {
+      const response = await axios.post('https://start-x-server.vercel.app/0/review/login', formData, {
         headers: { 'Content-Type': 'application/json' }
       });
 

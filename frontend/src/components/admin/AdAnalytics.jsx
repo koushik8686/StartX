@@ -19,7 +19,7 @@ const AllAdsAnalytics = () => {
 
   useEffect(() => {
     setLoading(true);
-    axios.get('http://localhost:4000/ads/getads')
+    axios.get('https://start-x-server.vercel.app/0/ads/getads')
       .then(response => setAds(response.data))
       .catch(error => console.error("Error fetching ads:", error))
       .finally(() => setLoading(false));

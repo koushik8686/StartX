@@ -11,7 +11,7 @@ const Grants = () => {
 
   const fetchGrants = async () => {
     try {
-      const response = await axios.get(`http://localhost:4000/review/${reviewer}/grantreviews`);
+      const response = await axios.get(`https://start-x-server.vercel.app/0/review/${reviewer}/grantreviews`);
       const sortedApplications = response.data.sort((a, b) => {
         if (a.grant_status.status === 'Under Review' && b.grant_status.status !== 'Under Review') return -1;
         if (a.grant_status.status !== 'Under Review' && b.grant_status.status === 'Under Review') return 1;
@@ -51,7 +51,7 @@ const Grants = () => {
 
   const handleSubmitReview = async (appId) => {
     try {
-      await axios.post(`http://localhost:4000/review/grants /${appId}/${reviewer}`, {
+      await axios.post(`https://start-x-server.vercel.app/0/review/grants /${appId}/${reviewer}`, {
         rating,
         comment
       });

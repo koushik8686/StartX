@@ -13,7 +13,7 @@ export default function StartupDetails({ kyc, progress }) {
   // Fetch ads data
   async function fetchAd() {
     try {
-      const response = await axios.get('http://localhost:4000/ads/get/ad')
+      const response = await axios.get('https://start-x-server.vercel.app/0/ads/get/ad')
       setAds(response.data)
     } catch (error) {
       console.error("Error fetching ads:", error)
@@ -25,7 +25,7 @@ export default function StartupDetails({ kyc, progress }) {
   async function handleAdClick(adId, link) {
     try {
       // Send POST request on ad click
-      await axios.post(`http://localhost:4000/ads/click/${adId}` , {startup})
+      await axios.post(`https://start-x-server.vercel.app/0/ads/click/${adId}` , {startup})
       window.open(link, '_blank')
     } catch (error) {
       console.error("Error handling ad click:", error)
@@ -55,7 +55,7 @@ export default function StartupDetails({ kyc, progress }) {
             <div className="flex items-center space-x-3 pb-3">
               <div className="w-20 h-20 rounded-full overflow-hidden shadow-sm">
                 <img 
-                  src={`http://localhost:4000/uploads/profiles/${kyc.profile_picture}`} 
+                  src={`https://start-x-server.vercel.app/0/uploads/profiles/${kyc.profile_picture}`} 
                   alt={kyc.company_name}
                   className="w-full h-full object-cover"
                 />
@@ -131,7 +131,7 @@ export default function StartupDetails({ kyc, progress }) {
               className="relative cursor-pointer aspect-video rounded-lg overflow-hidden shadow-md transition-transform duration-300 hover:shadow-lg"
             >
               <img
-                src={`http://localhost:4000/uploads/ads/${ad.AdImgUrl}`}
+                src={`https://start-x-server.vercel.app/0/uploads/ads/${ad.AdImgUrl}`}
                 className="object-cover w-full h-full"
                 alt={ad.adverCompanyName}
               />

@@ -16,7 +16,7 @@ const EIRApplications = () => {
   const fetchEIRs = async () => {
     setIsLoading(true); // Show loader
     try {
-      const response = await axios.get(`http://localhost:4000/review/${reviewer}/reviews`);
+      const response = await axios.get(`https://start-x-server.vercel.app/0/review/${reviewer}/reviews`);
       const sortedApplications = response.data.sort((a, b) => {
         if (a.status.status === 'pending' && b.status.status !== 'pending') return -1;
         if (a.status.status !== 'pending' && b.status.status === 'pending') return 1;
@@ -46,7 +46,7 @@ const EIRApplications = () => {
   const handleSubmitReview = async (appId) => {
     setIsLoading(true); // Show loader while submitting review
     try {
-      await axios.post(`http://localhost:4000/review/eir/${appId}/${reviewer}`, {
+      await axios.post(`https://start-x-server.vercel.app/0/review/eir/${appId}/${reviewer}`, {
         rating,
         comment
       });
