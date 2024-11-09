@@ -53,7 +53,7 @@ export default function Component() {
 
     // Append the user ID stored in cookies  
     try {
-      const response = await fetch('https://start-x-server.vercel.app/auth/kyc', {
+      const response = await axios.post('https://start-x-server.vercel.app/auth/kyc', {
         method: 'POST',
         body: formData,
       });
