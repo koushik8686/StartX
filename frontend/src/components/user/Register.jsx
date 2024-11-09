@@ -29,8 +29,12 @@ export default function Component() {
     setIsLoading(true)
     try {
       console.log(username);
-      const { data } = await axios.post(`https://start-x-server.vercel.app/auth/register`, { username, password, email })
-      alert(data.message)
+      const { data } = await axios.post(
+        `https://start-x-server.vercel.app/auth/register`,
+        { username, password, email },
+        { headers: { 'Content-Type': 'application/json' } }
+      );
+            alert(data.message)
       if (data.message === "Registration successful!") {
         Cookies.set('user', data.userId)
         setKycDetails({ ...kycDetails, user: data.userId })
